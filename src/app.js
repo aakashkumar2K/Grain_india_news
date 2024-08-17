@@ -17,10 +17,9 @@ app.use(express.static("public"))
 //app.use(bodyParser.json());
 
 app.use(cookieParser())
- 
-//routes
-// import userRouter from "./routes/user.routes.js"
- //app.use("/api/v1/users",userRouter);
+ //routes
+import router from './routes/admin.routes.js';
+ app.use("/api/v1/admin",router);
 
 
 

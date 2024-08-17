@@ -1,30 +1,44 @@
 import { admin } from "../models/admin.model.js";
 import { asyncHandler } from "../utils/asynHandler.js";
-import apiError from "../utils/apiError.js";
+import {ApiError} from "../utils/apiError.js";
+import {ApiResponse} from "../utils//apiResonse.js"
 
 const generateAccessAndRefereshTokens = async (user_id) => {
     try {
         const Admin = await admin.findById(user_id);
 
-        const accessToken = admin.generateAccessToken();
+        const accessToken = Admin.generateAccessToken();
         // console.log(accessToken);
-        const refreshToken = admin.generateRefreshToken();
+        const refreshToken = Admin.generateRefreshToken();
         Admin.refreshToken = refreshToken;
         await Admin.save({
             validateBeforeSave: false
         })
         return { accessToken, refreshToken };
     } catch (error) {
-        throw new apiError(500, "someThing went wrong while generating token");
+        throw new ApiError(500, "someThing went wrong while generating token");
     }
 
 }
 const createAdmin=asyncHandler(async(req,res)=>{
   const {userName,fullName,password,email} =req.body
   if ([fullName, password, userName, password].some((field) =>
-    field?.trim() === ""
+    field?.trim() ===""
 )) {
     throw new ApiError(400, "all fiels are required");
+}
+
+if(!fullName){
+    throw new ApiError(400, " fullname is required");
+}
+if(!userName){
+    throw new ApiError(400, " usernameis required");
+}
+if(!email){
+    throw new ApiError(400, " email is required");
+}
+if(!password){
+    throw new ApiError(400, " passwords required");
 }
 const existedUser = await admin.findOne({
     $or: [{ email }, { userName }]
@@ -50,4 +64,78 @@ return res.status(200).json(
 )
 })
 
-export default{createAdmin};
+const login = asyncHandler(async (req, res) => {
+    const { email, userName, password } = req.body;
+
+    if (!email && !userName) {
+        throw new ApiError(400, "email or username required")
+    }
+    const user = await admin.findOne({
+        $or: [{ email }, { userName }]
+    })
+    if (!user) {
+        throw new ApiError(401, "user does not exist")
+    }
+    const check =await user.isPasswordCorrect(password)
+    if (!check) {
+        throw new ApiError(400, "error wrong password");
+    }
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+    const logged_User = await admin.findById(user._id).select("-password -refreshToken")
+    return res.status(200).cookie("AccessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(200, logged_User, "user logged in successfully")
+        )
+})
+const logout = asyncHandler(async (req, res) => {
+    const user = admin.findByIdAndUpdate(
+      req.user._id, {
+        $set: {
+            refreshToken: undefined
+        }
+    }, 
+    {
+        new: true
+    }
+    )
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+    return res.status(200).clearCookie("AccessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(
+            new ApiResponse(200, {}, "user logged out successfully")
+        )
+
+})
+const changePassword = asyncHandler(async (req, res) => {
+    const {  oldPassword ,password} = req.body
+   // console.log(password)
+    if (!(password || oldPassword))
+        throw new ApiError(400, "password and old password cannot be empty");
+
+    const user = await admin.findById(req.user?._id);
+    
+    const validate = await user.isPasswordCorrect(oldPassword);
+    if (!validate) {
+        throw new ApiError(401, 'old passowrd is not correct')
+    }
+    user.password = password;
+    user.save({ validateBeforeSave: false });
+    return res.status(200).json(
+        new ApiResponse(200, {}, "password changed successfully")
+    )
+
+})
+export {
+    createAdmin,
+    login,
+    logout,
+    changePassword
+};
