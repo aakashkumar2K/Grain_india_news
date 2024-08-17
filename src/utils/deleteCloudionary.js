@@ -16,8 +16,6 @@ const deleteOnCloudinary=async(localFilePath)=>{
    const response=await cloudinary.uploader.destroy(localFilePath,function(result){
     console.log(result)
     })
-    
-   
     return response;
 
 
