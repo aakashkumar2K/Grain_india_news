@@ -1,4 +1,6 @@
 import mongoose from"mongoose";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 const adminSchema=new mongoose.Schema({
 userName:{
     type:String,
@@ -43,5 +45,7 @@ adminSchema.pre('save',async function(next){
     process.env.REFRESH_TOKEN_SECRET,
     {expiresIn:process.env.REFRESH_TOKEN_EXPIRY})
  }
- 
+ adminSchema.methods.isPasswordCorrect=async function(password){
+    return await bcrypt.compare(password,this.password);
+    }
 export const admin= mongoose.model("admin",adminSchema)
