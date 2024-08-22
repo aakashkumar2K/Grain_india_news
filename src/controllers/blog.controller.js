@@ -2,29 +2,31 @@ import { blog } from "../models/Blog.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResonse.js";
 import { asyncHandler } from "../utils/asynHandler.js";
-
+import { deleteOnCloudinary} from "../utils/deleteCloudionary.js"
+import {uploadOnCloudinary} from "../utils/cloudioanry.js"
+import { Mongoose } from "mongoose";
 const addBlog=asyncHandler(async(req,res)=>{
-    const{heading,detail,blogImage}=req.body;
+    const{heading,detail}=req.body;
     if(!heading){
         throw new ApiError(400,'heading is required');
     }
     let Image
-    if (req.files && Array.isArray(req.files.blogImage) && req.files.blogImage.length > 0) {
-        Image = req.files.blogImage.path
+    if (req.file ) {
+        Image = req.file.path
     }
+    console.log(Image)
     const uploadImage = await uploadOnCloudinary(Image);
     if(!uploadImage){
         throw new ApiError(200,"image not uploaded")
     }
     const blogee = await blog.create({
-       heading,
-     blogImage: Image?.url || "",
-        email,
-        password
+         heading,
+         blogImage: uploadImage?.url || "",
+        detail
 
     })
-    const createdblog= await (User.find(blogee._id))
-    if (!createduser) {
+    const createdblog= await (blog.find(blogee._id))
+    if (!createdblog) {
         throw new ApiError(500, 'something went wrong while creating the blog');
     }
     return res.status(200).json(
@@ -33,6 +35,52 @@ const addBlog=asyncHandler(async(req,res)=>{
 })
 
 const deletedBlog=asyncHandler(async(req,res)=>{
-    
+const id=req.query.id;
+console.log(id);
+const blogg=await blog.findById(id);
+console.log(blogg);
+if(!blogg){
+    throw new ApiError(401,"did not find the blog");
+}
+console.log(blogg.blogImage)
+deleteOnCloudinary(blogg.blogImage);
+const deletedBlog=await blog.deleteOne(blogg._id);
+if(!deletedBlog){
+    throw new ApiError(501,"something went wrong during deleting")
+}
+return res.status(200).json(
+    new ApiResponse(200,{},"blog deleted Successfully")
+)
+
+
 })
-export {createdblog}
+
+const updateBlog=asyncHandler(async(req,res)=>{
+    const {heading ,detail}=req.body;
+    //console.log(heading);
+    //console.log(detail);
+    const id=req.query.id;
+    const blogg=await blog.findById(id);
+    console.log(blogg)
+    if(!blogg){
+        throw new ApiError(400,"invalid id || blog not found");
+    }
+    let Image
+    if (req.file ) {
+        Image = req.file.path
+    }
+    console.log(Image)
+    const newurl= await uploadOnCloudinary(Image);
+    blogg.heading=heading;
+    blogg.detail=detail;
+     deleteOnCloudinary(blogg.blogImage);
+    
+    blogg.blogImage= newurl ?.url||"";
+    blogg.save();
+    
+    return res.status(200).json(
+         new ApiResponse(200,blogg,"blog updated sucessfully")
+    )
+
+})
+export {addBlog,deletedBlog,updateBlog}

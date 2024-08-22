@@ -18,9 +18,13 @@ app.use(express.static("public"))
 
 app.use(cookieParser())
  //routes
-import router from './routes/admin.routes.js';
- app.use("/api/v1/admin",router);
+import adminrouter from './routes/admin.routes.js';
+import crouselrouter from './routes/crousel.routes.js';
+import blogrouter from './routes/blog.routes.js';
+ app.use("/api/v1/admin",adminrouter);
 
+app.use("/api/v1/crousel",crouselrouter)
 
+app.use("/api/v1/blog",blogrouter)
 
 export default app;

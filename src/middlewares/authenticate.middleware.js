@@ -9,7 +9,7 @@ import { admin } from "../models/admin.model.js";
         //     throw new ApiError(400,"user is not logged in")
         // }
         const accessToken=req.cookies?.AccessToken||req.header("Authorization")?.replace("Bearer ","");
-        console.log(accessToken);
+       // console.log(accessToken);
         if(!accessToken){
             throw new ApiError(400,"user is not logged in")
         }

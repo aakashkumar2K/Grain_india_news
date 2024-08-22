@@ -5,9 +5,10 @@ import { upload } from "../middlewares/multer.middleware.js";
 //import { verifyJwt } from "../middlewares/authenticate.middleware.js";
 import { verifyJwt } from "../middlewares/authenticate.middleware.js";
 import { login,logout,createAdmin,changePassword } from "../controllers/admin.controller.js";
-const adminrouter=Router();
-adminrouter.route("/createAdmin").post(createAdmin)
-adminrouter.route("/login").post(login);
-adminrouter.route("/logout").post(verifyJwt,logout);
-adminrouter.route("/changePassword").post(verifyJwt,changePassword);
-export default adminrouter;
+import { addBlog, deletedBlog, updateBlog } from "../controllers/blog.controller.js";
+import { addCrousel, deleteCrousel } from "../controllers/crousel.controller.js";
+const crouselrouter=Router();
+crouselrouter.route("/addCrousel").post(upload.single(
+    'cImage'),verifyJwt,addCrousel);
+crouselrouter.route("/deleteCrousel").delete(verifyJwt,deleteCrousel)
+export default crouselrouter;
