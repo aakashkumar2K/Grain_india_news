@@ -16,9 +16,7 @@ const addBlog=asyncHandler(async(req,res)=>{
     }
     console.log(Image)
     const uploadImage = await uploadOnCloudinary(Image);
-    if(!uploadImage){
-        throw new ApiError(200,"image not uploaded")
-    }
+   
     const blogee = await blog.create({
          heading,
          blogImage: uploadImage?.url || "",
@@ -83,4 +81,13 @@ const updateBlog=asyncHandler(async(req,res)=>{
     )
 
 })
-export {addBlog,deletedBlog,updateBlog}
+const allBlog=asyncHandler(async(req,res)=>{
+  const data= await blog.find();
+  if(!data){
+    throw new ApiError(500,'internal server error,,..... data not fetched successfully');
+  }
+  return res.status(200).json(
+    new ApiResponse(200,data,'data fetched successfully')
+  )
+})
+export {addBlog,deletedBlog,updateBlog,allBlog}
