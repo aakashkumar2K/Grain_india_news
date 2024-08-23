@@ -43,12 +43,13 @@ const deleteCrousel=asyncHandler(async(req,res)=>{
         new ApiResponse(200,{},"image deleted Successfully"))
 })
 const allCrousel=asyncHandler(async(req,res)=>{
-const data=await crousel.find();
+const data=await crousel.find({});
 if(!data){
     throw new ApiError(500,'unable to fetch the data');
 }
+console.log(data);
 return res.status(200).json(
-    new ApiResponse(200,data,'all data return successfully')
+    new ApiResponse(200,{data},'all data return successfully')
 )
 })
 export{addCrousel,deleteCrousel,allCrousel}
