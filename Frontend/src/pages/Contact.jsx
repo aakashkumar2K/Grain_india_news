@@ -110,5 +110,5 @@ export function Contact() {
         </div>
       </div>
     </div>
-  );
-}
+  )
+};
