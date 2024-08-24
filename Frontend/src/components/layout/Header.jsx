@@ -47,7 +47,7 @@ export const Header = () => {
             Contact
           </NavLink>
           <NavLink 
-            to="/blog/:id" 
+            to="/blog" 
             className={({ isActive }) => 
               isActive ? "text-orange-500 font-semibold text-lg" : "text-white hover:text-orange-500 font-semibold text-lg"
             }
@@ -96,13 +96,14 @@ export const Header = () => {
             Contact
           </NavLink>
           <NavLink 
-            to="/blog/:id" 
+            to="/blog" 
             className={({ isActive }) => 
-              isActive ? "text-orange-500 font-semibold text-lg" : "text-white hover:text-orange-500 font-semibold text-lg"
+              isActive ? "block px-4 py-2 text-orange-500 font-semibold text-lg" : "block px-4 py-2 text-white hover:text-orange-500 font-semibold text-lg"
             }
           >
             Blog
           </NavLink>
+          
         </div>
       )}
     </nav>
