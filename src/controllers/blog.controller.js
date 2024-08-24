@@ -54,7 +54,7 @@ return res.status(200).json(
 })
 
 const updateBlog=asyncHandler(async(req,res)=>{
-    const {heading ,detail}=req.body;
+    const {heading ,detail,prevString}=req.body;
     //console.log(heading);
     //console.log(detail);
     const id=req.query.id;
@@ -67,13 +67,15 @@ const updateBlog=asyncHandler(async(req,res)=>{
     if (req.file ) {
         Image = req.file.path
     }
+    
     console.log(Image)
     const newurl= await uploadOnCloudinary(Image);
     blogg.heading=heading;
     blogg.detail=detail;
+    if(newurl?.url)
      deleteOnCloudinary(blogg.blogImage);
     
-    blogg.blogImage= newurl ?.url||"";
+    blogg.blogImage= newurl ?.url||prevString;
     blogg.save();
     
     return res.status(200).json(

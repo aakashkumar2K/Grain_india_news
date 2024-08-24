@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import grain1 from '/caroselimgs/grain1.webp'
-import grain2 from '/caroselimgs/grain2.webp'
-import grain3 from '/caroselimgs/grain3.webp'
-import grain4 from '/caroselimgs/grain4.webp'
-import grain5 from '/caroselimgs/grain5.webp'
-import grain6 from '/caroselimgs/grain6.webp'
-const images = [
-  grain1,
-  grain2,
-  grain3,
-  grain4,
-  grain5,
-  grain6,
-];
+import axios from 'axios';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [images, setImages] = useState([]);
 
   // Auto-slide functionality
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4500); // Change image every 4.5 seconds
+    }, 3500); // Change image every 3.5 seconds
 
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/v1/crousel');
+        const imagesArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
+        setImages(imagesArray);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
+    fetchImages();
     return () => clearInterval(interval); // Clean up the interval on component unmount
-  }, []);
+  }, [images.length]);
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
@@ -45,7 +44,7 @@ const Carousel = () => {
             } transition-all duration-1000 ease-in-out`}
           >
             <img
-              src={image}
+              src={image.cImage} // Assuming the API returns an array of objects with a `cImage` property
               alt={`Slide ${index + 1}`}
               className="w-full object-cover h-96"
             />
@@ -55,7 +54,7 @@ const Carousel = () => {
         {/* Left Arrow */}
         <button
           onClick={goToPrevious}
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white p-2 rounded-full shadow-md  focus:outline-none "
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white p-2 rounded-full shadow-md focus:outline-none"
         >
           &#10094;
         </button>
@@ -63,7 +62,7 @@ const Carousel = () => {
         {/* Right Arrow */}
         <button
           onClick={goToNext}
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white p-2 rounded-full shadow-md  focus:outline-none "
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white p-2 rounded-full shadow-md focus:outline-none"
         >
           &#10095;
         </button>

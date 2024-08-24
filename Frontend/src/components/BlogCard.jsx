@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BlogCard = ({ blog, onDelete }) => {
+const BlogCard = ({ blog}) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const handleSeeMore = () => {
@@ -28,6 +28,7 @@ const BlogCard = ({ blog, onDelete }) => {
                 </div>
                 <div className="p-4">
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">{blog.heading}</h3>
+                    <h7 className='text-m font-semibold text-gray-800 mb-2'>Grain India News @vinod Raghav</h7>
                     <p className="text-gray-600 h-20 overflow-hidden">{truncatedDetail}</p>
                     <div className="flex justify-between mt-4">
                         <button
@@ -36,12 +37,7 @@ const BlogCard = ({ blog, onDelete }) => {
                         >
                             See More
                         </button>
-                        <button
-                            onClick={() => onDelete(blog._id)}
-                            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300"
-                        >
-                            Delete
-                        </button>
+                        
                     </div>
                 </div>
             </div>
@@ -61,6 +57,7 @@ const BlogCard = ({ blog, onDelete }) => {
                             className="w-full h-64 object-cover rounded"
                         />
                         <h3 className="text-2xl font-bold mt-6 text-gray-800">{blog.heading}</h3>
+                        <h7 className='text-xl font-semibold text-gray-800 mb-2'>Grain India News @vinod Raghav</h7>
                         <p className="text-gray-600 mt-4">{blog.detail}</p>
                     </div>
                 </div>
