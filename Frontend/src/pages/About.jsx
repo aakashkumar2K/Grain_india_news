@@ -1,40 +1,53 @@
 import React from 'react';
 
-export const About = () => {
+export function About() {
+  const sections = [
+    {
+      title: "Our Commitment to Quality",
+      image: "https://images.unsplash.com/photo-1567849859756-79bf6a9d62f1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YnVzaW5lc3N3b21hbnxlbnwwfHwwfHx8MA%3D%3D",
+      description: "We pride ourselves on delivering the highest quality information and services in the agri-commodity sector.",
+    },
+    {
+      title: "Global Market Insights",
+      image: "https://plus.unsplash.com/premium_photo-1682096592504-5bc960bea6d7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGJ1c2luZXNzbWFufGVufDB8fDB8fHww",
+      description: "Our extensive network allows us to provide unparalleled insights into global agricultural markets.",
+    },
+    {
+      title: "Supporting Local Communities",
+      image: "https://plus.unsplash.com/premium_photo-1683140908202-a8741a87045a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fGJ1c2luZXNzd29tYW58ZW58MHx8MHx8fDA%3D",
+      description: "We're committed to ethical sourcing and supporting local farmers and communities across India.",
+    },
+  ];
+
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center py-12">
-      <header className="text-4xl font-bold text-blue-900 mb-8">About Us</header>
-      <main className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
-        <p className="mb-8 text-lg">
-          At iGrain India, we are a leading service provider in agri commodities. Our journey is rooted in our commitment to providing timely information to the industry. Our reports, containing vital information on agri-commodities, are industry benchmarks. They include daily market rates, arrivals, production-supply-demand figures, import/export parity/disparity, and other critical information needed for strategic planning. Founded in 2009 with a vision to provide timely information to the industry, iGrain India simplifies and informs the agriculture industry, making essential information accessible to all. We take pride in sourcing the best reports on grains and food products from trusted farmers, traders, millers, extractors, importers, exporters, associations, and producers across India and abroad. Our product range celebrates India's rich culinary diversity. From the northern plains to the southern coast, we provide detailed market studies on various agricultural products. We believe in responsible industrial practices and ethical sourcing, supporting local farmers and communities. Our ultimate goal is customer delight, and our dedicated team is always ready to assist you. Our vision is to be the trusted bridge between you and the industry, becoming the preferred choice for seeking premium information on grains and food essentials that enrich your business.
-        </p>
-      </main>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-6xl">
-        <div className="flex flex-col items-center">
-          <img
-            src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce"
-            alt="Quality"
-            className="w-48 h-48 object-cover mb-4"
-          />
-          <h3 className="text-xl font-semibold">Quality</h3>
+    <div className="bg-gray-50 min-h-screen">
+      <div className="container mx-auto px-4 py-16">
+        <h1 className="text-5xl font-bold text-center mb-16 text-gray-800">About Us</h1>
+        
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
+          <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+            At iGrain India, we are a leading service provider in agri commodities. Founded in 2009, our journey is rooted in our commitment to providing timely, accurate information to the industry. Our reports, containing vital information on agri-commodities, have become industry benchmarks.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+            We take pride in sourcing the best reports on grains and food products from trusted farmers, traders, millers, extractors, importers, exporters, associations, and producers across India and abroad. Our product range celebrates India's rich culinary diversity, providing detailed market studies on various agricultural products.
+          </p>
+          <p className="text-gray-700 leading-relaxed text-lg">
+            Our vision is to be the trusted bridge between you and the industry, becoming the preferred choice for seeking premium information on grains and food essentials that enrich your business. With a focus on responsible industrial practices and ethical sourcing, we're committed to supporting local farmers and communities while delivering unparalleled value to our clients.
+          </p>
         </div>
-        <div className="flex flex-col items-center">
-          <img
-            src="https://images.unsplash.com/photo-1560807707-8cc77767d783"
-            alt="Variety"
-            className="w-48 h-48 object-cover mb-4"
-          />
-          <h3 className="text-xl font-semibold">Variety</h3>
-        </div>
-        <div className="flex flex-col items-center">
-          <img
-            src="https://images.unsplash.com/photo-1593720217365-9ab75fe301e4"
-            alt="Sustainability"
-            className="w-48 h-48 object-cover mb-4"
-          />
-          <h3 className="text-xl font-semibold">Sustainability</h3>
-        </div>
+        
+        {sections.map((section, index) => (
+          <div key={index} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center mb-16 bg-white rounded-lg shadow-lg overflow-hidden`}>
+            <div className="w-full lg:w-1/2">
+              <img src={section.image} alt={section.title} className="w-full h-64 lg:h-80 object-contain" />
+            </div>
+            <div className="w-full lg:w-1/2 p-8">
+              <h2 className="text-3xl font-semibold text-gray-800 mb-4">{section.title}</h2>
+              <p className="text-gray-600 leading-relaxed">{section.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
-};
+}
