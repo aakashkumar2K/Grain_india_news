@@ -16,9 +16,7 @@ const addBlog=asyncHandler(async(req,res)=>{
     }
     console.log(Image)
     const uploadImage = await uploadOnCloudinary(Image);
-    if(!uploadImage){
-        throw new ApiError(200,"image not uploaded")
-    }
+   
     const blogee = await blog.create({
          heading,
          blogImage: uploadImage?.url || "",
@@ -38,7 +36,7 @@ const deletedBlog=asyncHandler(async(req,res)=>{
 const id=req.query.id;
 console.log(id);
 const blogg=await blog.findById(id);
-console.log(blogg);
+//console.log(blogg);
 if(!blogg){
     throw new ApiError(401,"did not find the blog");
 }
@@ -83,4 +81,25 @@ const updateBlog=asyncHandler(async(req,res)=>{
     )
 
 })
-export {addBlog,deletedBlog,updateBlog}
+const allBlog=asyncHandler(async(req,res)=>{
+  const data= await blog.find({});
+  if(!data){
+    throw new ApiError(500,'internal server error,,..... data not fetched successfully');
+  }
+  console.log(data);
+  return res.status(200).json(
+    new ApiResponse(200,{data},'data fetched successfully')
+  )
+})
+const singleBlog=asyncHandler(async(req,res)=>{
+    const id=req.query.id;
+    const blogg=await blog.findById(id);
+    console.log(blogg._id)
+    if(!blogg){
+        throw new ApiError(400,"invalid id || blog not found");
+    }
+    return res.status(200).json(
+        new ApiResponse(200,blogg,'blog found and returned successfully')
+    )
+})
+export {addBlog,deletedBlog,updateBlog,allBlog,singleBlog}

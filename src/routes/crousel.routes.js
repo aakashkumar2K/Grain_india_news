@@ -6,9 +6,10 @@ import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJwt } from "../middlewares/authenticate.middleware.js";
 import { login,logout,createAdmin,changePassword } from "../controllers/admin.controller.js";
 import { addBlog, deletedBlog, updateBlog } from "../controllers/blog.controller.js";
-import { addCrousel, deleteCrousel } from "../controllers/crousel.controller.js";
+import { addCrousel, allCrousel, deleteCrousel } from "../controllers/crousel.controller.js";
 const crouselrouter=Router();
+crouselrouter.route("/").get(allCrousel);
 crouselrouter.route("/addCrousel").post(upload.single(
-    'cImage'),verifyJwt,addCrousel);
-crouselrouter.route("/deleteCrousel").delete(verifyJwt,deleteCrousel)
+    'cImage'),addCrousel);
+crouselrouter.route("/deleteCrousel").delete(deleteCrousel)
 export default crouselrouter;

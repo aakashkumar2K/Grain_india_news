@@ -5,11 +5,13 @@ import { upload } from "../middlewares/multer.middleware.js";
 //import { verifyJwt } from "../middlewares/authenticate.middleware.js";
 import { verifyJwt } from "../middlewares/authenticate.middleware.js";
 import { login,logout,createAdmin,changePassword } from "../controllers/admin.controller.js";
-import { addBlog, deletedBlog, updateBlog } from "../controllers/blog.controller.js";
+import { addBlog, allBlog, deletedBlog, singleBlog, updateBlog } from "../controllers/blog.controller.js";
 const blogrouter=Router();
-blogrouter.route("/addBlog").post(upload.single('blogImage'),verifyJwt,addBlog);
-blogrouter.route("/deleteBlog").delete(verifyJwt ,deletedBlog);
-blogrouter.route("/updateBlog").put(upload.single('blogImage'),verifyJwt,updateBlog);
+blogrouter.route('/').get(allBlog);
+blogrouter.route("/blogg").get(singleBlog);
+blogrouter.route("/addBlog").post(upload.single('blogImage'),addBlog);
+blogrouter.route("/deleteBlog").delete(deletedBlog);
+blogrouter.route("/updateBlog").put(upload.single('blogImage'),updateBlog);
 // router.route("/createAdmin").post(createAdmin)
 // router.route("/login").post(login);
 // router.route("/logout").post(verifyJwt,logout);

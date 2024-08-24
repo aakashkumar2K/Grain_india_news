@@ -7,12 +7,13 @@ import { uploadOnCloudinary } from "../utils/cloudioanry.js";
 
 const addCrousel=asyncHandler(async(req,res)=>{
     const crouselLocalPath = req.file.path;
+    console.log(crouselLocalPath)
     if(!crouselLocalPath){
         throw new ApiError(400,"crousel image required");
     }
     const newurl=await uploadOnCloudinary(crouselLocalPath);
     if(!newurl){
-        throw new ApiError(500,  "something went wrong while creating the") 
+        throw new ApiError(500,  "something went wrong while uploading the image") 
     }
     const newcrousel=await crousel.create({
        cImage:newurl.url
@@ -41,4 +42,14 @@ const deleteCrousel=asyncHandler(async(req,res)=>{
     return res.status(200).json(
         new ApiResponse(200,{},"image deleted Successfully"))
 })
-export{addCrousel,deleteCrousel}
+const allCrousel=asyncHandler(async(req,res)=>{
+const data=await crousel.find({});
+if(!data){
+    throw new ApiError(500,'unable to fetch the data');
+}
+console.log(data);
+return res.status(200).json(
+    new ApiResponse(200,{data},'all data return successfully')
+)
+})
+export{addCrousel,deleteCrousel,allCrousel}
