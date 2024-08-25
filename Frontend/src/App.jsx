@@ -7,6 +7,7 @@ import { Blog } from "./pages/Blog";
 import { Contact } from "./pages/Contact";
 import { MarketRate } from "./pages/MarketRate";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 import AppLayout from "./components/layout/AppLayout";
 
 import AddImage from "../src/Admin/AddImage"
@@ -31,9 +32,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/marketrates" element={<MarketRate />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path='/login' element={<LoginForm/>}/>
-          
-          <Route path="/admin" element={<Admin />}>
+        </Route>
+        <Route path="/admin" element={<Admin />}>
         <Route index element={ <AdminHome/>} />
         <Route path="/admin/add-image" element={<AddImage />} />
         <Route path="/admin/all-blog" element={<ShowAllBlogs />} /> 

@@ -12,7 +12,7 @@ export const Header = () => {
   return (
     <nav className="bg-black shadow-md">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-        <div className="text-2xl font-bold text-white"><img src="../../public/logoD.webp" width={50} alt="" /></div>
+        <div className="text-2xl font-bold text-white"> <NavLink to="/"><img src="../../public/logoD.webp" width={50} alt="" /></NavLink></div>
         <div className="hidden md:flex space-x-6">
           <NavLink 
             to="/" 

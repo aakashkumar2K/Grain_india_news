@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
-import contactUs from '../../public/contactUs.png'
+import contactUs from '../../public/contactUs.png';
 import toast from 'react-hot-toast';
 
 export function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobile: '', // Added mobile field
     message: ''
   });
 
@@ -19,6 +20,7 @@ export function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     emailjs.send(
       'service_98qarfb',
       'template_u6p8w78 ',
@@ -26,6 +28,7 @@ export function Contact() {
         from_name: formData.name,
         to_name: 'Gourab Bistu',
         from_email: formData.email,
+        mobile: formData.mobile, // Included mobile number in the template
         message: formData.message,
       },
       'M3kgWV1nyNEK7pMG8'
@@ -37,7 +40,7 @@ export function Contact() {
       toast.error('Failed to send the message, please try again.');
     });
 
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', mobile: '', message: '' });
   };
 
   return (
@@ -48,7 +51,7 @@ export function Contact() {
         </h2>
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="w-full md:w-1/2 lg:w-5/12">
-            <img src={contactUs} alt="Contact Us" className="w-full h-auto rounded-lg " />
+            <img src={contactUs} alt="Contact Us" className="w-full h-auto rounded-lg" />
           </div>
           <div className="w-full md:w-1/2 lg:w-5/12">
             <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -80,6 +83,21 @@ export function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Your Email"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="mobile">
+                    Mobile Number
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="mobile"
+                    type="tel"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    placeholder="Your Mobile Number"
                     required
                   />
                 </div>
