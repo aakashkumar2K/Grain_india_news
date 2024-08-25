@@ -68,6 +68,10 @@ const Admin = () => {
                             </li>
                             <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
                                 <AiOutlineLogout />
+                                <Link to="/admin/changePassword" className="flex-1">ChangePassword</Link>
+                            </li>
+                            <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
+                                <AiOutlineLogout />
                                 <Link to="/" className="flex-1">Logout</Link>
                             </li>
                         </ul>

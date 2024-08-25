@@ -55,12 +55,12 @@ export const Header = () => {
             Blog
           </NavLink>
           <NavLink 
-            to="/admin" 
+            to="/login" 
             className={({ isActive }) => 
               isActive ? "text-orange-500 font-semibold text-lg" : "text-white hover:text-orange-500 font-semibold text-lg"
             }
           >
-            Admin
+            Login
           </NavLink>
         </div>
         <div className="md:hidden">
@@ -110,6 +110,14 @@ export const Header = () => {
             }
           >
             Blog
+          </NavLink>
+          <NavLink 
+            to="/login" 
+            className={({ isActive }) => 
+              isActive ? "block px-4 py-2 text-orange-500 font-semibold text-lg" : "block px-4 py-2 text-white hover:text-orange-500 font-semibold text-lg"
+            }
+          >
+            Login
           </NavLink>
           
         </div>

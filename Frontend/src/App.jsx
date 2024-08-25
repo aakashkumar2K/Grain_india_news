@@ -17,6 +17,8 @@ import RemoveCarouselImage from "../src/Admin/RemoveCarouselImage";
 import ShowAllCarousel from "../src/Admin/ShowAllCarousel";
 import CreateBlog from "../src/Admin/CreateBlog";
 import AdminHome from "./Admin/AdminHome";
+import ChangePassword from "./Admin/AdminChangePassword";
+import LoginForm from "./pages/login";
 
 function App() {
   // 2nd Way
@@ -29,8 +31,9 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/marketrates" element={<MarketRate />} />
           <Route path="/blog" element={<Blog />} />
-        </Route>
-        <Route path="/admin" element={<Admin />}>
+          <Route path='/login' element={<LoginForm/>}/>
+          
+          <Route path="/admin" element={<Admin />}>
         <Route index element={ <AdminHome/>} />
         <Route path="/admin/add-image" element={<AddImage />} />
         <Route path="/admin/all-blog" element={<ShowAllBlogs />} /> 
@@ -39,10 +42,14 @@ function App() {
         <Route path="/admin/remove-image" element={<RemoveCarouselImage />} />
         <Route path="/admin/all-image" element={<ShowAllCarousel />} />
         <Route path="/admin/create-blog" element={<CreateBlog />} />
+        <Route path="/admin/changePassword" element={<ChangePassword />} />
+        
+        
+        </Route>
         </Route>
         {/*
         <Route path="/remove-blog" element={<RemoveBlog />} />
-        <Route path="/logout" element={<Logout />} />
+       <Route path="/logout" element={<Logout />} />
         <Route path="/all-blog" element={<BlogList />} /> */}
       </Routes>
     </Router>

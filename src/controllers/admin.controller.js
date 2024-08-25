@@ -65,11 +65,14 @@ return res.status(200).json(
 })
 
 const login = asyncHandler(async (req, res) => {
-    const { email, userName, password } = req.body;
-
-    if (!email && !userName) {
+    const { identifier , password } = req.body
+    console.log(identifier);
+    console.log(password);
+    if (!identifier) {
         throw new ApiError(400, "email or username required")
     }
+    const email=identifier;
+    const userName=identifier;
     const user = await admin.findOne({
         $or: [{ email }, { userName }]
     })
