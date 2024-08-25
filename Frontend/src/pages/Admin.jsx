@@ -1,19 +1,9 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation, Outlet } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { AiFillHome, AiOutlinePlus, AiOutlineEdit, AiOutlineDelete, AiOutlineLogout } from 'react-icons/ai';
 import { FaImage } from 'react-icons/fa';
-// import Home from './components/Home';
-// import AddImage from '../components/Admin/AddImage';
-// import RemoveImage from './components/RemoveImage';
-// import CreateBlog from './components/CreateBlog';
-// import EditBlog from './components/EditBlog';
-// import RemoveBlog from './components/RemoveBlog';
-// import Logout from './components/Logout';
-// import BlogEditList from './components/showAllEditBlog';
-// import BlogList from './components/showAllBlog';
-// import AllImage from './components/AllImage';
-// import './App.css';
-// const ChangableComponent =  () => <p>Hello</p>;
+import toast from 'react-hot-toast';
+
 const ScrollToTop = () => {
     const { pathname } = useLocation();
 
@@ -28,6 +18,24 @@ const ScrollToTop = () => {
 };
 
 const Admin = () => {
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+
+    const handleLogoutClick = () => {
+        setShowModal(true);
+    };
+
+    const handleLogoutConfirm = () => {
+        setShowModal(false);
+        toast.success('Logged out successfully!');
+        navigate('/'); // Redirects to the home or login page
+    };
+
+    const handleLogoutCancel = () => {
+        setShowModal(false);
+        toast.error('Logout cancelled');
+    };
+
     return (
         <div>
             <div className="min-h-screen flex flex-col">
@@ -68,7 +76,7 @@ const Admin = () => {
                             </li>
                             <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded">
                                 <AiOutlineLogout />
-                                <Link to="/" className="flex-1">Logout</Link>
+                                <button onClick={handleLogoutClick} className="flex-1 text-left">Logout</button>
                             </li>
                         </ul>
                     </nav>
@@ -77,7 +85,31 @@ const Admin = () => {
                     </div>
                 </div>
             </div>
+
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                        <h2 className="text-xl font-bold text-gray-900 mb-4">Confirm Logout</h2>
+                        <p className="text-gray-700 mb-6">Are you sure you want to log out?</p>
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                onClick={handleLogoutCancel}
+                                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleLogoutConfirm}
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
+
 export default Admin;

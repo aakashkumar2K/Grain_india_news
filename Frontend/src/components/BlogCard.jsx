@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BlogCardShimmer } from './BlogCardShimmer';
 
 const BlogCard = ({ blog }) => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -12,12 +11,29 @@ const BlogCard = ({ blog }) => {
         setIsExpanded(false);
     };
 
+    // Format the updatedAt date and time
+    const formattedDate = new Date(blog.updatedAt).toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        // hour: 'numeric',
+        // minute: 'numeric',
+        // hour12: true,
+    });
+    const formattedDateFull = new Date(blog.updatedAt).toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    });
+
     // Truncate the detail text to 100 characters
     const truncatedDetail = blog.detail.length > 100 
         ? blog.detail.substring(0, 100) + '...' 
         : blog.detail;
 
-    
     return (
         <>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 p-5 hover:scale-95 relative">
@@ -32,13 +48,14 @@ const BlogCard = ({ blog }) => {
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">{blog.heading}</h3>
                     <h6 className='text-m font-semibold text-gray-800 mb-2'>Grain India News @vinod Raghav</h6>
                     <p className="text-gray-600 h-20 overflow-hidden mb-5">{truncatedDetail}</p>
-                    <div className="flex justify-between mt-4 absolute bottom-2">
+                    <div className="flex  gap-24 items-center mt-4 absolute bottom-2 w-full">
                         <button
                             onClick={handleSeeMore}
                             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300"
                         >
                             See More
                         </button>
+                        <p className="text-sm text-gray-500">{formattedDate}</p>
                     </div>
                 </div>
             </div>
@@ -55,16 +72,11 @@ const BlogCard = ({ blog }) => {
                         <h6 className='text-xl font-semibold text-gray-800 mb-2'>Grain India News @vinod Raghav</h6>
                         <p className="text-gray-600 mt-4">
                             {blog.detail}
-                            <button
-                                onClick={handleClose}
-                                className="ml-4 text-red-500 hover:text-red-700 focus:outline-none text-md font-bold w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-md transition duration-300 hover:bg-gray-100  lg:hidden"
-                            >
-                                close
-                            </button>
                         </p>
+                        <p className=" mt-5 text-md  font-semibold text-gray-900">Created Blog at : {formattedDateFull}</p>
                         <button
                             onClick={handleClose}
-                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none text-4xl font-bold w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-md transition duration-300 hover:bg-gray-100 flex lg:flex"
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none text-4xl font-bold w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-md transition duration-300 hover:bg-gray-100"
                         >
                             &times;
                         </button>
