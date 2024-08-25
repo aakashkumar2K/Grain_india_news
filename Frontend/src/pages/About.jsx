@@ -1,5 +1,5 @@
 import React from 'react';
-
+import img1 from '../../public/aboutUs.png'
 export function About() {
   const sections = [
     {
@@ -9,7 +9,7 @@ export function About() {
     },
     {
       title: "Global Market Insights",
-      image: "https://plus.unsplash.com/premium_photo-1682096592504-5bc960bea6d7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGJ1c2luZXNzbWFufGVufDB8fDB8fHww",
+      image: img1,
       description: "Our extensive network allows us to provide unparalleled insights into global agricultural markets.",
     },
     {

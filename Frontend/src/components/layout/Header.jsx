@@ -54,6 +54,14 @@ export const Header = () => {
           >
             Blog
           </NavLink>
+          <NavLink 
+            to="/admin" 
+            className={({ isActive }) => 
+              isActive ? "text-orange-500 font-semibold text-lg" : "text-white hover:text-orange-500 font-semibold text-lg"
+            }
+          >
+            Admin
+          </NavLink>
         </div>
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-white focus:outline-none">

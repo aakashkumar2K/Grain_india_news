@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import contactUs from '../../public/contactUs.png'
+import toast from 'react-hot-toast';
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -30,10 +31,10 @@ export function Contact() {
       'M3kgWV1nyNEK7pMG8'
     ).then((result) => {
       console.log(result.text);
-      alert('Message sent successfully!');
+      toast.success('Message sent successfully!');
     }).catch((error) => {
       console.log(error.text);
-      alert('Failed to send the message, please try again.');
+      toast.error('Failed to send the message, please try again.');
     });
 
     setFormData({ name: '', email: '', message: '' });

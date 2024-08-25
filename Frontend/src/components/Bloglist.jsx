@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BlogCard from './BlogCard'
+import { BlogCardShimmer } from './BlogCardShimmer';
 // import './BlogList.css'; // Assuming you'll style your list here
 
 const BlogList = () => {
@@ -156,7 +157,9 @@ const BlogList = () => {
             <BlogCard key={blog._id} blog={blog} />
           ))
         ) : (
-          <p className="text-center text-gray-500">No blogs available.</p>
+          Array.from({ length: 20 }).map((_, i) => (
+            <BlogCardShimmer key={i}/>
+          ))
         )}
       </div>
       
