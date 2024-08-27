@@ -23,7 +23,10 @@ const ChangePassword = () => {
       await axios.post('http://localhost:8000/api/v1/admin/changePassword', {
         oldPassword,
         password: newPassword, // Ensure the correct variable is used here
-      });
+      },
+      {withCredentials : true}
+
+      );
       setSuccessMessage('Password changed successfully.');
       setTimeout(() => setSuccessMessage(''), 3000); // Clears the success message after 3 seconds
     } catch (error) {

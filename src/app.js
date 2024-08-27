@@ -4,10 +4,14 @@ import cors from "cors"
 
 
 const app=express();
+// app.use(cors({
+//     origin:process.env.origin,
+//     credentials:true
+// }));
 app.use(cors({
-    origin:process.env.origin,
-    credentials:true
-}));
+    origin: 'http://localhost:5173', // The origin of your frontend application
+    credentials: true, // This allows cookies to be sent and received
+  }));
 
 app.use(express.urlencoded({extended:true,limit:'16kb'}))
 app.use(express.json({

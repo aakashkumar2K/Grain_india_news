@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { AiFillHome, AiOutlinePlus, AiOutlineEdit, AiOutlineDelete, AiOutlineLogout } from 'react-icons/ai';
 import { FaImage } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import {useAuth} from '../AuthContext'
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -19,16 +21,34 @@ const ScrollToTop = () => {
 
 const Admin = () => {
     const navigate = useNavigate();
+    const {logout}=useAuth();
     const [showModal, setShowModal] = useState(false);
 
     const handleLogoutClick = () => {
         setShowModal(true);
     };
 
-    const handleLogoutConfirm = () => {
-        setShowModal(false);
-        toast.success('Logged out successfully!');
-        navigate('/'); // Redirects to the home or login page
+    const handleLogoutConfirm = async() => {
+
+
+
+
+        
+            // Implement logout logic
+    
+            try {
+                await axios.get('http://localhost:8000/api/v1/admin/logout',{
+                    withCredentials: true
+                  });
+                 logout();
+                 setShowModal(false);
+                toast.success('Logged out successfully!');
+                navigate('/'); // Redirects to the home or login page
+            } catch (error) {
+                console.error('Error editing blog:', error);
+            }
+            
+        
     };
 
     const handleLogoutCancel = () => {

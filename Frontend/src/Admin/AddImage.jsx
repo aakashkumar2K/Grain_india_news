@@ -27,6 +27,8 @@ const AddImage = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                
+                withCredentials: true,
             });
             toast.success('Image added successfully!');
             clearForm();

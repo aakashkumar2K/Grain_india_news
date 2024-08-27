@@ -9,7 +9,7 @@ import { addBlog, deletedBlog, updateBlog } from "../controllers/blog.controller
 import { addCrousel, allCrousel, deleteCrousel } from "../controllers/crousel.controller.js";
 const crouselrouter=Router();
 crouselrouter.route("/").get(allCrousel);
-crouselrouter.route("/addCrousel").post(upload.single(
+crouselrouter.route("/addCrousel").post(verifyJwt,upload.single(
     'cImage'),addCrousel);
-crouselrouter.route("/deleteCrousel").delete(deleteCrousel)
+crouselrouter.route("/deleteCrousel").delete(verifyJwt,deleteCrousel)
 export default crouselrouter;

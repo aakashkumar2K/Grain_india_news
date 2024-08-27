@@ -6,8 +6,8 @@ import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJwt } from "../middlewares/authenticate.middleware.js";
 import { login,logout,createAdmin,changePassword } from "../controllers/admin.controller.js";
 const adminrouter=Router();
-adminrouter.route("/createAdmin").post(createAdmin)
+adminrouter.route("/createAdmin").post(verifyJwt,createAdmin)
 adminrouter.route("/login").post(login);
-adminrouter.route("/logout").post(verifyJwt,logout);
+adminrouter.route("/logout").get(verifyJwt,logout);
 adminrouter.route("/changePassword").post(verifyJwt,changePassword);
 export default adminrouter;

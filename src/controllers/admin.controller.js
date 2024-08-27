@@ -65,14 +65,14 @@ return res.status(200).json(
 })
 
 const login = asyncHandler(async (req, res) => {
-    const { identifier , password } = req.body
-    console.log(identifier);
+    const { username , password } = req.body
+    console.log(username);
     console.log(password);
-    if (!identifier) {
+    if (!username) {
         throw new ApiError(400, "email or username required")
     }
-    const email=identifier;
-    const userName=identifier;
+    const email=username;
+    const userName=username;
     const user = await admin.findOne({
         $or: [{ email }, { userName }]
     })
@@ -87,10 +87,16 @@ const login = asyncHandler(async (req, res) => {
         httpOnly: true,
         secure: true
     }
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true, // Ensure cookies are secure in production
+        sameSite: 'Strict', // Set to 'Lax' or 'Strict' based on your requirement
+        path: '/', // Cookie available on the entire site
+    };
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
     const logged_User = await admin.findById(user._id).select("-password -refreshToken")
-    return res.status(200).cookie("AccessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
+    return res.status(200).cookie("AccessToken", accessToken, cookieOptions)
+        .cookie("refreshToken", refreshToken, cookieOptions)
         .json(
             new ApiResponse(200, logged_User, "user logged in successfully")
         )
@@ -110,8 +116,14 @@ const logout = asyncHandler(async (req, res) => {
         httpOnly: true,
         secure: true
     }
-    return res.status(200).clearCookie("AccessToken", options)
-        .clearCookie("refreshToken", options)
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true, // Ensure cookies are secure in production
+        sameSite: 'Strict', // Set to 'Lax' or 'Strict' based on your requirement
+        path: '/', // Cookie available on the entire site
+    };
+    return res.status(200).clearCookie("AccessToken", cookieOptions)
+        .clearCookie("refreshToken", cookieOptions)
         .json(
             new ApiResponse(200, {}, "user logged out successfully")
         )

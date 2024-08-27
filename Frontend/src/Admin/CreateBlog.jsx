@@ -30,6 +30,9 @@ const CreateBlog = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                
+            withCredentials: true,
+                  
             });
             toast.success('Blog created successfully!');
             setErrorMessage('');

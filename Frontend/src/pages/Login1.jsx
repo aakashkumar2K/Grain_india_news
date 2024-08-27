@@ -1,16 +1,21 @@
-
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
- function Login() {
-    const navigate = useNavigate();
-    
+import axios from 'axios';
+import  {useAuth } from '../AuthContext';
+
+function Login() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,14 +28,38 @@ import { useNavigate } from 'react-router-dom';
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.username === 'vinod' && formData.password === 'Aakash@2002') {
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    const { username, password } = formData;
+
+    if (!username || !password) {
+      setErrorMessage('Both fields are required.');
+      setTimeout(() => setErrorMessage(''), 3000);
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/admin/login', {
+        username,
+        password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true, 
+      });
+      login();
       toast.success('Login successful!');
-      // Redirect or perform further actions after successful login
-      navigate('/admin');
-    } else {
-      toast.error('Invalid username or password');
+      navigate('/admin'); // Navigate to the /admin route on successful login
+    } catch (error) {
+      setErrorMessage('Invalid username/email or password.');
+      setTimeout(() => setErrorMessage(''), 3000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -38,6 +67,9 @@ import { useNavigate } from 'react-router-dom';
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">Admin Login</h2>
+        {errorMessage && (
+          <p className="text-red-500 text-center mb-4">{errorMessage}</p>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -56,6 +88,7 @@ import { useNavigate } from 'react-router-dom';
                 onChange={handleChange}
                 placeholder="Enter username"
                 required
+                disabled={isSubmitting}
               />
             </div>
           </div>
@@ -76,12 +109,13 @@ import { useNavigate } from 'react-router-dom';
                 onChange={handleChange}
                 placeholder="Enter password"
                 required
+                disabled={isSubmitting}
               />
               <span
                 className="px-3 text-gray-500 cursor-pointer"
                 onClick={togglePasswordVisibility}
               >
-                {showPassword ? < FaEye /> : <FaEyeSlash />}
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
           </div>
@@ -89,8 +123,9 @@ import { useNavigate } from 'react-router-dom';
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 w-full"
               type="submit"
+              disabled={isSubmitting}
             >
-              Login
+              {isSubmitting ? 'Logging in...' : 'Login'}
             </button>
           </div>
         </form>
@@ -98,4 +133,5 @@ import { useNavigate } from 'react-router-dom';
     </div>
   );
 }
+
 export default Login;

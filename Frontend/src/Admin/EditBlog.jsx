@@ -13,7 +13,9 @@ const EditBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/blog/blogg?id=${blogId}`);
+                const response = await axios.get(`http://localhost:8000/api/v1/blog/blogg?id=${blogId}`,
+                    {withCredentials: true},
+                  );
                 setBlogData(response.data.data);
                 setPrevImage(response.data.data.blogImage);
             } catch (error) {
@@ -38,6 +40,7 @@ const EditBlog = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                withCredentials:true,
             });
             toast.success('Blog updated successfully!');
         } catch (error) {

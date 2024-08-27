@@ -22,21 +22,21 @@ export function Contact() {
     e.preventDefault();
     console.log(formData);
     emailjs.send(
-      'service_98qarfb',
-      'template_u6p8w78 ',
+      'service_3pnvrfl',
+      'template_096p65v',
       {
         from_name: formData.name,
-        to_name: 'Gourab Bistu',
+        to_name: 'Vinod Raghav',
         from_email: formData.email,
         mobile: formData.mobile, // Included mobile number in the template
         message: formData.message,
       },
-      'M3kgWV1nyNEK7pMG8'
+      'k5P6azDSAA0E5RCco'
     ).then((result) => {
-      console.log(result.text);
+      //console.log(result.text);
       toast.success('Message sent successfully!');
     }).catch((error) => {
-      console.log(error.text);
+      //console.log(error.text);
       toast.error('Failed to send the message, please try again.');
     });
 

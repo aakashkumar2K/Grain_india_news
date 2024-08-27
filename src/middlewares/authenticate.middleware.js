@@ -5,9 +5,10 @@ import { admin } from "../models/admin.model.js";
 
  const verifyJwt=asyncHandler(async(req,_,next)=>{
     try {
-        // if(!(req.cookies.length>0)){
-        //     throw new ApiError(400,"user is not logged in")
-        // }
+        console.log(req.cookies);
+        if(!(req.cookies.AccessToken)){
+            throw new ApiError(400,"user is not logged in there")
+        }
         const accessToken=req.cookies?.AccessToken||req.header("Authorization")?.replace("Bearer ","");
        // console.log(accessToken);
         if(!accessToken){

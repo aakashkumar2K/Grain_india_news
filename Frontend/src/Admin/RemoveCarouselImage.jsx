@@ -24,7 +24,9 @@ const RemoveCarouselImage = () => {
 
     const handleRemoveImage = async (imageId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/v1/crousel/deleteCrousel?id=${imageId}`);
+            await axios.delete(`http://localhost:8000/api/v1/crousel/deleteCrousel?id=${imageId}`,{
+                withCredentials: true,
+              });
             setImages(images.filter(image => image._id !== imageId));
             toast.success('Image removed successfully!');
         } catch (error) {
