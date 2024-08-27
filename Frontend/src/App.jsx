@@ -46,7 +46,6 @@ function App() {
         
         
         </Route>
-        </Route>
         {/*
         <Route path="/remove-blog" element={<RemoveBlog />} />
        <Route path="/logout" element={<Logout />} />
