@@ -8,9 +8,10 @@ export const Home = () => {
   return (
     <div>
       <Carousel/>
+      <HeroSection2/>
       <HeroSection/>
       <BulletPoints/>
-      <HeroSection2/>
+      
       <TestimonialSlider/>
     </div>
   )

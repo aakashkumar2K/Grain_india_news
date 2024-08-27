@@ -11,7 +11,8 @@ function BulletPoints() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mb-10">
+    <div className="w-full px-5 md:px-0">
+    <div className="container mx-auto px-4 py-16 block transition-transform duration-300">
       <h2 className="text-center text-3xl sm:text-4xl font-bold text-blue-900 mb-10">
         Our Services
       </h2>
@@ -35,6 +36,7 @@ function BulletPoints() {
           />
         </div>
       </div>
+    </div>
     </div>
   );
 }

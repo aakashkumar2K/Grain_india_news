@@ -11,7 +11,7 @@ export const Footer = () => {
     <footer className="bg-black text-white py-8">
       <div className="container mx-auto flex flex-col md:flex-row justify-evenly items-center">
         <div className="flex flex-col items-center md:items-start mb-4">
-          <img src="/logoD.webp" alt="IGrain India Logo" className="w-48" />
+          <img src="/logow.png" alt="IGrain India Logo" className="w-48" />
         </div>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 gap-4">
           <div>
