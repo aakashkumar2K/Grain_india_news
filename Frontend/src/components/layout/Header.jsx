@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleServiceClick = () => {
+    navigate('/'); // Ensure you are on the home page
+    setTimeout(() => {
+      document.getElementById('services-section').scrollIntoView({ behavior: 'smooth' });
+    }, 100); // Timeout to ensure page has navigated
   };
 
   return (
@@ -59,6 +67,9 @@ export const Header = () => {
           >
             Blog
           </NavLink>
+          <button onClick={handleServiceClick} className="text-white hover:text-orange-500 font-semibold text-lg">
+            Services
+          </button>
           <NavLink 
             to="/login" 
             className={({ isActive }) => 
@@ -116,6 +127,9 @@ export const Header = () => {
           >
             Blog
           </NavLink>
+          <button onClick={handleServiceClick} className="block px-4 py-2 text-white hover:text-orange-500 font-semibold text-lg">
+            Services
+          </button>
           <NavLink 
             to="/login" 
             className={({ isActive }) => 
@@ -124,7 +138,6 @@ export const Header = () => {
           >
             Login
           </NavLink>
-          
         </div>
       )}
     </nav>

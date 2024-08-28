@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 function HeroSection2() {
     return (
-        <div className="w-full px-5 md:px-0">
+        <div className="container mx-auto px-4 py-8 flex flex-col items-center">
+        <div className="w-full md:w-4/5 lg:w-3/4 bg-white ">
             <NavLink
                 to='/about'
                 className="container mx-auto px-4 py-16 block transition-transform duration-300 ease-in-out hover:scale-105"
@@ -23,17 +24,11 @@ function HeroSection2() {
                         </p>
                         <p className="text-gray-700 leading-relaxed text-lg">
                         Our mission is to be the reliable connection between you and the agri-industry, establishing ourselves as the preferred source for premium information on grains and essential food items that drive your business forward. We are dedicated to ethical sourcing and responsible practices, committed to supporting local farmers and communities while providing unparalleled value to our clients.
-
-
-
-
-
-
-
                         </p>
                     </div>
                 </div>
             </NavLink>
+        </div>
         </div>
     );
 }

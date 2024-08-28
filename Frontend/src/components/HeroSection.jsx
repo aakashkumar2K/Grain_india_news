@@ -123,7 +123,7 @@ const BlogID = () => {
 
 function HeroSection() {
   return (
-    <div className="w-full px-5 md:px-0">
+    <div className="w-full px-5 md:px-0 -mt-16">
       <div className="mx-auto grid grid-cols-1 md:grid-cols-10 gap-8 my-10 md:px-52">
         <div className="md:col-span-7">
           <Gallery />

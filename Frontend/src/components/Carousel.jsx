@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CarouselShimmer from './CarouselShimmer'
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Auto-slide functionality
   useEffect(() => {
@@ -16,6 +18,7 @@ const Carousel = () => {
         const response = await axios.get('http://localhost:8000/api/v1/crousel');
         const imagesArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
         setImages(imagesArray);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -34,7 +37,8 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto mt-8 mb-8">
+  isLoading ? <CarouselShimmer /> :
+   ( <div className="relative w-full max-w-6xl mx-auto mt-8 mb-8">
       <div className="overflow-hidden rounded-lg shadow-lg relative w-[90%] mx-auto">
         {images.map((image, index) => (
           <div
@@ -67,7 +71,7 @@ const Carousel = () => {
           &#10095;
         </button>
       </div>
-    </div>
+    </div>)
   );
 };
 
