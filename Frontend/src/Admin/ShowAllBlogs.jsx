@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BlogCard from '../components/BlogCard';
 import { BlogCardShimmer } from '../components/BlogCardShimmer';
+import { BASE_URL } from '../components/helper';
 
 const ShowAllBlogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -9,7 +10,7 @@ const ShowAllBlogs = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/blog');
+                const response = await axios.get(`${BASE_URL}/api/v1/blog`);
                 const blogsArray = Array.isArray(response.data.data.data) 
                     ? response.data.data.data 
                     : [response.data.data.data];

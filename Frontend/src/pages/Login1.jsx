@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import  {useAuth } from '../AuthContext';
+ import { BASE_URL } from '../components/helper';
 
 function Login() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/admin/login', {
+      const response = await axios.post(`${BASE_URL}/api/v1/admin/login`, {
         username,
         password,
       }, {

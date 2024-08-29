@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { MdImage, MdTitle, MdDescription, MdUpload, MdRefresh } from 'react-icons/md';
-
+import { BASE_URL } from '../components/helper';
 const CreateBlog = () => {
     const [blogData, setBlogData] = useState({ heading: '', detail: '', blogImage: null });
     const [errorMessage, setErrorMessage] = useState('');
@@ -26,7 +26,7 @@ const CreateBlog = () => {
         setIsUploading(true);
 
         try {
-            await axios.post('http://localhost:8000/api/v1/blog/addBlog', formData, {
+            await axios.post(`${BASE_URL}/api/v1/blog/addBlog`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { MdCloudUpload, MdCheckCircle, MdError, MdDelete } from 'react-icons/md';
-
+import { BASE_URL } from '../components/helper';
 const AddImage = () => {
     const [imageData, setImageData] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -23,7 +23,7 @@ const AddImage = () => {
 
         setIsUploading(true);
         try {
-            await axios.post('http://localhost:8000/api/v1/crousel/addCrousel', formData, {
+            await axios.post(`${BASE_URL}/api/v1/crousel/addCrousel`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

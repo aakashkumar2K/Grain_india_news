@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { MdDelete, MdPreview, MdClose } from 'react-icons/md';
+import { BASE_URL } from '../components/helper';
 
 const RemoveCarouselImage = () => {
     const [images, setImages] = useState([]);
@@ -10,7 +11,7 @@ const RemoveCarouselImage = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/crousel');
+                const response = await axios.get('${BASE_URL}/api/v1/crousel');
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
                 setImages(blogsArray); // Adjust according to your API structure
             } catch (error) {
@@ -24,7 +25,7 @@ const RemoveCarouselImage = () => {
 
     const handleRemoveImage = async (imageId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/v1/crousel/deleteCrousel?id=${imageId}`,{
+            await axios.delete(`${BASE_URL}/api/v1/crousel/deleteCrousel?id=${imageId}`,{
                 withCredentials: true,
               });
             setImages(images.filter(image => image._id !== imageId));

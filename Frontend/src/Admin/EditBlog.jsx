@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { BASE_URL } from '../components/helper';
 
 const EditBlog = () => {
     const { id: blogId } = useParams();
@@ -13,7 +14,7 @@ const EditBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/blog/blogg?id=${blogId}`,
+                const response = await axios.get(`${BASE_URL}/api/v1/blog/blogg?id=${blogId}`,
                     {withCredentials: true},
                   );
                 setBlogData(response.data.data);
@@ -36,7 +37,7 @@ const EditBlog = () => {
 
         try {
             setIsUploading(true);
-            await axios.put(`http://localhost:8000/api/v1/blog/updateBlog?id=${blogId}`, formData, {
+            await axios.put(`${BASE_URL}/api/v1/blog/updateBlog?id=${blogId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

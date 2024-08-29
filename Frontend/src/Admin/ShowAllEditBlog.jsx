@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../components/helper';
 
 const ShowAllEditBlog = () => {
     const [blogs, setBlogs] = useState([]);
@@ -10,7 +11,7 @@ const ShowAllEditBlog = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/blog',{
+                const response = await axios.get('${BASE_URL}/api/v1/blog',{
                     withCredentials: true,
                   });
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
@@ -25,7 +26,7 @@ const ShowAllEditBlog = () => {
 
     const handleDeleteBlog = async (blogId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/v1/blog/deleteBlog?id=${blogId}`,{
+            await axios.delete(`${BASE_URL}/api/v1/blog/deleteBlog?id=${blogId}`,{
                 withCredentials:true,
             });
             setBlogs(blogs.filter(blog => blog._id !== blogId));

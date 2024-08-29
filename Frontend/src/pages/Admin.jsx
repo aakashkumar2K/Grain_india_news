@@ -5,6 +5,7 @@ import { AiFillHome, AiOutlinePlus, AiOutlineEdit, AiOutlineDelete, AiOutlineLog
 import { FaImage } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import {useAuth} from '../AuthContext'
+import { BASE_URL } from '../components/helper';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -37,7 +38,7 @@ const Admin = () => {
             // Implement logout logic
     
             try {
-                await axios.get('http://localhost:8000/api/v1/admin/logout',{
+                await axios.get(`${BASE_URL}/api/v1/admin/logout`,{
                     withCredentials: true
                   });
                  logout();
@@ -45,7 +46,7 @@ const Admin = () => {
                 toast.success('Logged out successfully!');
                 navigate('/'); // Redirects to the home or login page
             } catch (error) {
-                console.error('Error editing blog:', error);
+                console.error('Error ...:', error);
             }
             
         

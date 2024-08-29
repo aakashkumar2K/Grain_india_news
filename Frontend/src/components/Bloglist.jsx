@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BlogCard from './BlogCard'
 import { BlogCardShimmer } from './BlogCardShimmer';
+import{ BASE_URL} from "./helper";
 // import './BlogList.css'; // Assuming you'll style your list here
 
 const BlogList = () => {
@@ -136,7 +137,7 @@ const BlogList = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/blog');
+                const response = await axios.get(`${BASE_URL}/api/v1/blog`);
                 //console.log(response.data.data.data);
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data: [response.data.dat.data];
                 setBlogs(blogsArray);

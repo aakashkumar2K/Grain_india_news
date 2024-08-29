@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CarouselShimmer from './CarouselShimmer'
+import { BASE_URL } from './helper';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,7 +16,7 @@ const Carousel = () => {
 
     const fetchImages = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/v1/crousel');
+        const response = await axios.get(`${BASE_URL}/api/v1/crousel`);
         const imagesArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
         setImages(imagesArray);
         setIsLoading(false);

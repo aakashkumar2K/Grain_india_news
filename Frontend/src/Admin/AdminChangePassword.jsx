@@ -20,7 +20,7 @@ const ChangePassword = () => {
     setIsSubmitting(true);
     try {
       // Replace with your actual API call
-      await axios.post('http://localhost:8000/api/v1/admin/changePassword', {
+      await axios.post(`${BASE_URL}/api/v1/admin/changePassword`, {
         oldPassword,
         password: newPassword, // Ensure the correct variable is used here
       },
