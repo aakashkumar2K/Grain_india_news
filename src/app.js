@@ -17,6 +17,11 @@ app.use(cors({
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
+  app.use(cors({
+    origin: 'https://grain-india-news.vercel.app',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 
 
 app.use(express.urlencoded({extended:true,limit:'16kb'}))
