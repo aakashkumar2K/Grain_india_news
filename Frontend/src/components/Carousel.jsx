@@ -16,7 +16,14 @@ const Carousel = () => {
 
     const fetchImages = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/v1/crousel`);
+        const response = await axios.get(`${BASE_URL}/api/v1/crousel`,
+          { headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Referer': 'https://grainindianews.netlify.app/',
+            'Referrer-Policy': 'strict-origin-when-cross-origin'
+          }
+        }
+        );
         const imagesArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
         setImages(imagesArray);
         setIsLoading(false);
