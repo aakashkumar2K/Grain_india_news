@@ -15,7 +15,10 @@ const EditBlog = () => {
         const fetchBlog = async () => {
             try {
                 const response = await axios.get(`${BASE_URL}/api/v1/blog/blogg?id=${blogId}`,
-                    {withCredentials: true},
+                    {
+                        headers:{
+                          'Accept': 'application/json, text/plain, */*'
+                        },withCredentials: true},
                   );
                 setBlogData(response.data.data);
                 setPrevImage(response.data.data.blogImage);

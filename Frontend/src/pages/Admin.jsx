@@ -39,6 +39,10 @@ const Admin = () => {
     
             try {
                 await axios.get(`${BASE_URL}/api/v1/admin/logout`,{
+                    
+                        headers:{
+                          'Accept': 'application/json, text/plain, */*'
+                        },
                     withCredentials: true
                   });
                  logout();

@@ -11,7 +11,10 @@ const RemoveCarouselImage = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axios.get('${BASE_URL}/api/v1/crousel');
+                const response = await axios.get(`${BASE_URL}/api/v1/crousel`,{
+                    headers:{
+                      'Accept': 'application/json, text/plain, */*'
+                    },});
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
                 setImages(blogsArray); // Adjust according to your API structure
             } catch (error) {

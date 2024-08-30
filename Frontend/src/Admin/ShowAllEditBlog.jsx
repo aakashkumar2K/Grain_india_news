@@ -12,6 +12,10 @@ const ShowAllEditBlog = () => {
         const fetchBlogs = async () => {
             try {
                 const response = await axios.get('${BASE_URL}/api/v1/blog',{
+                    
+                        headers:{
+                          'Accept': 'application/json, text/plain, */*'
+                        },
                     withCredentials: true,
                   });
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];

@@ -137,7 +137,12 @@ const BlogList = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/api/v1/blog`);
+                const response = await axios.get(`${BASE_URL}/api/v1/blog`,{
+                  
+                    headers:{
+                      'Accept': 'application/json, text/plain, */*'
+                    },
+                });
                 //console.log(response.data.data.data);
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data: [response.data.dat.data];
                 setBlogs(blogsArray);
