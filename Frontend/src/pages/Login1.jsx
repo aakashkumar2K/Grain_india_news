@@ -48,8 +48,10 @@ function Login() {
         username,
         password,
       }, {
-        headers: {
-          'Content-Type': 'application/json',
+        headers:{
+          'Accept': 'application/json, text/plain, */*',
+          'Referer': window.location,
+          'Referrer-Policy': 'strict-origin-when-cross-origin'
         },
         withCredentials: true, 
       });
