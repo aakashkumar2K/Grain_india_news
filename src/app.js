@@ -19,10 +19,9 @@ const app=express();
   })); */
   app.use(cors({
     origin: 'https://grain-india-news.vercel.app',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   }));
-
 
 app.use(express.urlencoded({extended:true,limit:'16kb'}))
 app.use(express.json({

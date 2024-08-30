@@ -50,8 +50,7 @@ function Login() {
       }, {
         headers:{
           'Accept': 'application/json, text/plain, */*',
-          'Referer': window.location,
-          'Referrer-Policy': 'strict-origin-when-cross-origin'
+          'Referer': window.location
         },
         withCredentials: true, 
       });

@@ -19,8 +19,7 @@ const Carousel = () => {
         const response = await axios.get(`${BASE_URL}/api/v1/crousel`,
           { headers: {
             'Accept': 'application/json, text/plain, */*',
-            'Referer': window.location,
-            'Referrer-Policy': 'strict-origin-when-cross-origin'
+            'Referer': window.location
           }
         }
         );
