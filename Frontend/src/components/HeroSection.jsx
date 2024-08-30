@@ -4,6 +4,7 @@ import { MdClose } from "react-icons/md";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MdNavigateNext, MdArticle } from 'react-icons/md';
+import { BASE_URL } from "./helper";
 
 const imgArr = [
   "https://images.unsplash.com/photo-1615485290628-c5033c657a8c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODN8fGdyYWluc3xlbnwwfHwwfHx8MA%3D%3D",
@@ -71,7 +72,7 @@ const BlogID = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/v1/blog');
+        const response = await axios.get(`${BASE_URL}/api/v1/blog`);
         const blogsArray = Array.isArray(response.data.data.data) 
           ? response.data.data.data 
           : [response.data.data.data];
