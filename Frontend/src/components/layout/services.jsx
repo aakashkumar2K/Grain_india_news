@@ -31,7 +31,7 @@ function BulletPoints() {
             {/* Image */}
             <div className="sm:w-1/2 flex justify-center">
               <img 
-                src="../../../public/aboutUs.png" 
+                src="/aboutUs.png" 
                 alt="Services" 
                 className="w-full h-64 sm:h-64 rounded-lg shadow-lg object-cover transition-transform duration-300 hover:scale-105"
               />

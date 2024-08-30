@@ -22,7 +22,7 @@ export const Header = () => {
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         <div className="flex items-center">
           <NavLink to="/">
-            <img src="../../public/logow.png" width={50} alt="Logo" />
+            <img src="/logow.png" width={50} alt="Logo" />
           </NavLink>
           <span className="ml-3 text-2xl font-bold text-white">Grain India News</span>
         </div>

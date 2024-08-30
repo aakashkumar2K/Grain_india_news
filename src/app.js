@@ -12,6 +12,11 @@ app.use(cors({
     origin: 'http://localhost:5173', // The origin of your frontend application
     credentials: true, // This allows cookies to be sent and received
   }));
+app.use(cors({
+    origin: 'https://grainindianews.netlify.app/',
+    credentials: true, // if you need to allow credentials
+  }));
+  
 
 app.use(express.urlencoded({extended:true,limit:'16kb'}))
 app.use(express.json({
