@@ -49,8 +49,7 @@ function Login() {
         password,
       }, {
         headers:{
-          'Accept': 'application/json, text/plain, */*',
-          'Referer': window.location
+          'Accept': 'application/json, text/plain, */*'
         },
         withCredentials: true, 
       });

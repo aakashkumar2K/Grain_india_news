@@ -18,8 +18,7 @@ const Carousel = () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/v1/crousel`,
           { headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Referer': window.location
+            'Accept': 'application/json, text/plain, */*'
           }
         }
         );
