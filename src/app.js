@@ -21,6 +21,7 @@ const app=express();
     origin: 'https://grain-india-news.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    credentials:true
   }));
 
 app.use(express.urlencoded({extended:true,limit:'16kb'}))
