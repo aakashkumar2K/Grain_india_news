@@ -29,32 +29,58 @@ const Admin = () => {
         setShowModal(true);
     };
 
-    const handleLogoutConfirm = async() => {
+    // const handleLogoutConfirm = async() => {
 
 
 
 
         
-            // Implement logout logic
+    //         // Implement logout logic
     
-            try {
-                await axios.get(`${BASE_URL}/api/v1/admin/logout`,{
+    //         try {
+    //             await axios.get(`${BASE_URL}/api/v1/admin/logout`,{
                     
-                        headers:{
-                          'Accept': 'application/json, text/plain, */*'
-                        },
-                    withCredentials: true
-                  });
-                 logout();
-                 setShowModal(false);
-                toast.success('Logged out successfully!');
-                navigate('/'); // Redirects to the home or login page
-            } catch (error) {
-                console.error('Error ...:', error);
-            }
+    //                     headers:{
+    //                       'Accept': 'application/json, text/plain, */*'
+    //                     },
+    //                 withCredentials: true
+    //               });
+    //              logout();
+    //              setShowModal(false);
+    //             toast.success('Logged out successfully!');
+    //             navigate('/'); // Redirects to the home or login page
+    //         } catch (error) {
+    //             console.error('Error ...:', error);
+    //         }
             
         
+    // };
+    const handleLogoutConfirm = async () => {
+        try {
+            // Make a request to the backend to handle logout
+            await axios.post(`${BASE_URL}/api/v1/admin/logout`, {}, {
+                headers: {
+                    'Accept': 'application/json, text/plain, */*'
+                },
+                withCredentials: true // Include credentials if required by backend
+            });
+    
+            // Clear tokens from localStorage
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            logout();
+                         setShowModal(false);
+            //             toast.success('Logged out successfully!');
+            //             navigate('/'); // Redirects to the home or login page
+            // Redirect or update the UI to reflect the logged-out state
+            navigate('/login');
+            toast.success('Logout successful!');
+        } catch (error) {
+            console.error('Error logging out:', error);
+            toast.error('Error logging out. Please try again.');
+        }
     };
+    
 
     const handleLogoutCancel = () => {
         setShowModal(false);

@@ -64,72 +64,86 @@ return res.status(200).json(
 )
 })
 
-const login = asyncHandler(async (req, res) => {
-    const { username , password } = req.body
-    console.log(username);
-    console.log(password);
-    if (!username) {
-        throw new ApiError(400, "email or username required")
-    }
-    const email=username;
-    const userName=username;
-    const user = await admin.findOne({
-        $or: [{ email }, { userName }]
-    })
-    if (!user) {
-        throw new ApiError(401, "user does not exist")
-    }
-    const check =await user.isPasswordCorrect(password)
-    if (!check) {
-        throw new ApiError(400, "error wrong password");
-    }
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
-    const cookieOptions = {
-        httpOnly: true,      // Ensures the cookie is accessible only by the web server (not JavaScript)
-        secure: true,        // Ensures the cookie is sent only over HTTPS connections
-        sameSite: 'None',    // Allows the cookie to be sent in cross-site contexts
-        path: '/',           // Makes the cookie available throughout the entire site
-    };
+// const login = asyncHandler(async (req, res) => {
+//     const { username , password } = req.body
+//     console.log(username);
+//     console.log(password);
+//     if (!username) {
+//         throw new ApiError(400, "email or username required")
+//     }
+//     const email=username;
+//     const userName=username;
+//     const user = await admin.findOne({
+//         $or: [{ email }, { userName }]
+//     })
+//     if (!user) {
+//         throw new ApiError(401, "user does not exist")
+//     }
+//     const check =await user.isPasswordCorrect(password)
+//     if (!check) {
+//         throw new ApiError(400, "error wrong password");
+//     }
+//     const options = {
+//         httpOnly: true,
+//         secure: true
+//     }
+//     const cookieOptions = {
+//         httpOnly: true,      // Ensures the cookie is accessible only by the web server (not JavaScript)
+//         secure: true,        // Ensures the cookie is sent only over HTTPS connections
+//         sameSite: 'None',    // Allows the cookie to be sent in cross-site contexts
+//         path: '/',           // Makes the cookie available throughout the entire site
+//     };
     
-    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
-    const logged_User = await admin.findById(user._id).select("-password -refreshToken")
-    return res.status(200).cookie("AccessToken", accessToken, cookieOptions)
-        .cookie("refreshToken", refreshToken, cookieOptions)
-        .json(
-            new ApiResponse(200, logged_User, "user logged in successfully")
-        )
-})
-const logout = asyncHandler(async (req, res) => {
-    const user = admin.findByIdAndUpdate(
-      req.user._id, {
-        $set: {
-            refreshToken: undefined
-        }
-    }, 
-    {
-        new: true
-    }
-    )
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
-    const cookieOptions = {
-        httpOnly: true,
-        secure: true, // Ensure cookies are secure in production
-        sameSite: 'Strict', // Set to 'Lax' or 'Strict' based on your requirement
-        path: '/', // Cookie available on the entire site
-    };
-    return res.status(200).clearCookie("AccessToken", cookieOptions)
-        .clearCookie("refreshToken", cookieOptions)
-        .json(
-            new ApiResponse(200, {}, "user logged out successfully")
-        )
+//     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+//     const logged_User = await admin.findById(user._id).select("-password -refreshToken")
+//     return res.status(200).cookie("AccessToken", accessToken, cookieOptions)
+//         .cookie("refreshToken", refreshToken, cookieOptions)
+//         .json(
+//             new ApiResponse(200, logged_User, "user logged in successfully")
+//         )
+// })
 
-})
+// const logout = asyncHandler(async (req, res) => {
+//     const user = admin.findByIdAndUpdate(
+//       req.user._id, {
+//         $set: {
+//             refreshToken: undefined
+//         }
+//     }, 
+//     {
+//         new: true
+//     }
+//     )
+//     const options = {
+//         httpOnly: true,
+//         secure: true
+//     }
+//     const cookieOptions = {
+//         httpOnly: true,
+//         secure: true, // Ensure cookies are secure in production
+//         sameSite: 'None', // Set to 'Lax' or 'Strict' based on your requirement
+//         path: '/', // Cookie available on the entire site
+//     };
+//     return res.status(200).clearCookie("AccessToken", cookieOptions)
+//         .clearCookie("refreshToken", cookieOptions)
+//         .json(
+//             new ApiResponse(200, {}, "user logged out successfully")
+//         )
+
+// })
+const logout = asyncHandler(async (req, res) => {
+    // Update the user's refreshToken to undefined
+    await admin.findByIdAndUpdate(
+        req.user._id,
+        { $set: { refreshToken: undefined } },
+        { new: true }
+    );
+
+    return res.status(200).json(
+        new ApiResponse(200, {}, "User logged out successfully")
+    );
+});
+
 const changePassword = asyncHandler(async (req, res) => {
     const {  oldPassword ,password} = req.body
    // console.log(password)

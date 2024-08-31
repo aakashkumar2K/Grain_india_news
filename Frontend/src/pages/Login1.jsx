@@ -28,7 +28,6 @@ function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -37,32 +36,73 @@ function Login() {
     const { username, password } = formData;
 
     if (!username || !password) {
-      setErrorMessage('Both fields are required.');
-      setTimeout(() => setErrorMessage(''), 3000);
-      setIsSubmitting(false);
-      return;
+        setErrorMessage('Both fields are required.');
+        setTimeout(() => setErrorMessage(''), 3000);
+        setIsSubmitting(false);
+        return;
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/admin/login`, {
-        username,
-        password,
-      }, {
-        headers:{
-          'Accept': 'application/json, text/plain, */*'
-        },
-        withCredentials: true, 
-      });
-      login();
-      toast.success('Login successful!');
-      navigate('/admin'); // Navigate to the /admin route on successful login
+        const response = await axios.post(`${BASE_URL}/api/v1/admin/login`, {
+            username,
+            password,
+        }, {
+            headers: {
+                'Accept': 'application/json, text/plain, */*'
+            }
+        });
+
+        const { accessToken, refreshToken, user } = response.data;
+
+        // Store tokens in localStorage
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
+        login(); // Custom function to set user session if needed
+        toast.success('Login successful!');
+        navigate('/admin'); // Navigate to the /admin route on successful login
     } catch (error) {
-      setErrorMessage('Invalid username/email or password.');
-      setTimeout(() => setErrorMessage(''), 3000);
+        setErrorMessage('Invalid username/email or password.');
+        setTimeout(() => setErrorMessage(''), 3000);
     } finally {
-      setIsSubmitting(false);
+        setIsSubmitting(false);
     }
-  };
+};
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+  //   setErrorMessage('');
+
+  //   const { username, password } = formData;
+
+  //   if (!username || !password) {
+  //     setErrorMessage('Both fields are required.');
+  //     setTimeout(() => setErrorMessage(''), 3000);
+  //     setIsSubmitting(false);
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.post(`${BASE_URL}/api/v1/admin/login`, {
+  //       username,
+  //       password,
+  //     }, {
+  //       headers:{
+  //         'Accept': 'application/json, text/plain, */*'
+  //       },
+  //       withCredentials: true, 
+  //     });
+  //     login();
+  //     toast.success('Login successful!');
+  //     navigate('/admin'); // Navigate to the /admin route on successful login
+  //   } catch (error) {
+  //     setErrorMessage('Invalid username/email or password.');
+  //     setTimeout(() => setErrorMessage(''), 3000);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
