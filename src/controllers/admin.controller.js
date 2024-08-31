@@ -88,11 +88,12 @@ const login = asyncHandler(async (req, res) => {
         secure: true
     }
     const cookieOptions = {
-        httpOnly: true,
-        secure: true, // Ensure cookies are secure in production
-        sameSite: 'Lax', // Set to 'Lax' or 'Strict' based on your requirement
-        path: '/', // Cookie available on the entire site
+        httpOnly: true,      // Ensures the cookie is accessible only by the web server (not JavaScript)
+        secure: true,        // Ensures the cookie is sent only over HTTPS connections
+        sameSite: 'None',    // Allows the cookie to be sent in cross-site contexts
+        path: '/',           // Makes the cookie available throughout the entire site
     };
+    
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
     const logged_User = await admin.findById(user._id).select("-password -refreshToken")
     return res.status(200).cookie("AccessToken", accessToken, cookieOptions)
