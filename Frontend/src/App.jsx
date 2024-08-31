@@ -87,14 +87,14 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<AppLayout />}>
+          <Route path="/" element={<AppLayout />}> </Route>
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/marketrates" element={<MarketRate />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/login" element={<Login />} />
-          </Route>
+         
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<Admin />}>
               <Route index element={<AdminHome />} />
