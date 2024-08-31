@@ -90,7 +90,7 @@ const login = asyncHandler(async (req, res) => {
     const cookieOptions = {
         httpOnly: true,
         secure: true, // Ensure cookies are secure in production
-        sameSite: 'Strict', // Set to 'Lax' or 'Strict' based on your requirement
+        sameSite: 'Lax', // Set to 'Lax' or 'Strict' based on your requirement
         path: '/', // Cookie available on the entire site
     };
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
