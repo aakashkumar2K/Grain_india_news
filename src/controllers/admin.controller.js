@@ -131,14 +131,53 @@ return res.status(200).json(
 //         )
 
 // })
+const login = asyncHandler(async (req, res) => {
+    const { username, password } = req.body;
+    
+    if (!username) {
+        throw new ApiError(400, "email or username required");
+    }
+
+    const email = username;
+    const userName = username;
+    
+    const user = await admin.findOne({
+        $or: [{ email }, { userName }]
+    });
+
+    if (!user) {
+        throw new ApiError(401, "user does not exist");
+    }
+
+    const check = await user.isPasswordCorrect(password);
+    
+    if (!check) {
+        throw new ApiError(400, "error wrong password");
+    }
+
+    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+    const logged_User = await admin.findById(user._id).select("-password -refreshToken");
+
+    // Send tokens in response body
+    return res.status(200).json({
+        accessToken,
+        refreshToken,
+        user: logged_User,
+        message: "user logged in successfully"
+    });
+});
+
 const logout = asyncHandler(async (req, res) => {
     // Update the user's refreshToken to undefined
-    await admin.findByIdAndUpdate(
+   const user= await admin.findByIdAndUpdate(
         req.user._id,
         { $set: { refreshToken: undefined } },
         { new: true }
     );
-
+    
+if(!user){
+    throw new ApiError(400,"user is not logged i");
+}
     return res.status(200).json(
         new ApiResponse(200, {}, "User logged out successfully")
     );

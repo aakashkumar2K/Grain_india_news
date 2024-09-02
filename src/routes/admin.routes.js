@@ -8,6 +8,6 @@ import { login,logout,createAdmin,changePassword } from "../controllers/admin.co
 const adminrouter=Router();
 adminrouter.route("/createAdmin").post(verifyJwt,createAdmin)
 adminrouter.route("/login").post(login);
-adminrouter.route("/logout").get(verifyJwt,logout);
+adminrouter.route("/logout").post(verifyJwt,logout);
 adminrouter.route("/changePassword").post(verifyJwt,changePassword);
 export default adminrouter;

@@ -58,10 +58,13 @@ const Admin = () => {
     const handleLogoutConfirm = async () => {
         try {
             // Make a request to the backend to handle logout
-            await axios.post(`${BASE_URL}/api/v1/admin/logout`, {}, {
+            const token = localStorage.getItem("accessToken");
+            console.log(token);
+            await axios.post(`${BASE_URL}/api/v1/admin/logout`,{"mssage":"hello"}, {
                 headers: {
-                    'Accept': 'application/json, text/plain, */*'
-                },
+                    'Content-Type': 'multipart/form-data',
+                      'Authorization': `Bearer ${token}`
+              },
                 withCredentials: true // Include credentials if required by backend
             });
     

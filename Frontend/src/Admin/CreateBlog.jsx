@@ -26,12 +26,16 @@ const CreateBlog = () => {
         setIsUploading(true);
 
         try {
+            const token = localStorage.getItem("accessToken");
             await axios.post(`${BASE_URL}/api/v1/blog/addBlog`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },
+                      'Authorization': `Bearer ${token}`
+      
+                 },
+                 withCredentials:true
                 
-            withCredentials: true,
+          
                   
             });
             toast.success('Blog created successfully!');

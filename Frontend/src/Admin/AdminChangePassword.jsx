@@ -20,12 +20,17 @@ const ChangePassword = () => {
     setIsSubmitting(true);
     try {
       // Replace with your actual API call
+      const token = localStorage.getItem("accessToken");
       await axios.post(`${BASE_URL}/api/v1/admin/changePassword`, {
         oldPassword,
         password: newPassword, // Ensure the correct variable is used here
       },
-      {withCredentials : true}
-
+      {headers: {
+                    'Content-Type': 'multipart/form-data',
+                      'Authorization': `Bearer ${token}`
+      }
+    }
+      
       );
       setSuccessMessage('Password changed successfully.');
       setTimeout(() => setSuccessMessage(''), 3000); // Clears the success message after 3 seconds

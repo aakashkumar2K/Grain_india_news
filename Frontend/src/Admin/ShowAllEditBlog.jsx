@@ -11,11 +11,13 @@ const ShowAllEditBlog = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get('${BASE_URL}/api/v1/blog',{
-                    
-                        headers:{
-                          'Accept': 'application/json, text/plain, */*'
-                        },
+                const token=localStorage.getItem("accessToken");
+                const response = await axios.get(`${BASE_URL}/api/v1/blog`,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                          'Authorization': `Bearer ${token}`
+                  },
+                       
                     withCredentials: true,
                   });
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
@@ -30,7 +32,12 @@ const ShowAllEditBlog = () => {
 
     const handleDeleteBlog = async (blogId) => {
         try {
+            const token=localStorage.getItem("accessToken");
             await axios.delete(`${BASE_URL}/api/v1/blog/deleteBlog?id=${blogId}`,{
+                headers: {
+                            'Content-Type': 'multipart/form-data',
+                              'Authorization': `Bearer ${token}`
+                      },
                 withCredentials:true,
             });
             setBlogs(blogs.filter(blog => blog._id !== blogId));

@@ -11,10 +11,12 @@ const RemoveCarouselImage = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
+                const token=localStorage.getItem("accessToken");
                 const response = await axios.get(`${BASE_URL}/api/v1/crousel`,{
-                    headers:{
-                      'Accept': 'application/json, text/plain, */*'
-                    },});
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                          'Authorization': `Bearer ${token}`
+                  },});
                 const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data : [response.data.data.data];
                 setImages(blogsArray); // Adjust according to your API structure
             } catch (error) {
@@ -28,7 +30,12 @@ const RemoveCarouselImage = () => {
 
     const handleRemoveImage = async (imageId) => {
         try {
+            const token=localStorage.getItem("accessToken");
             await axios.delete(`${BASE_URL}/api/v1/crousel/deleteCrousel?id=${imageId}`,{
+                headers: {
+                        'Content-Type': 'multipart/form-data',
+                          'Authorization': `Bearer ${token}`
+                  },
                 withCredentials: true,
               });
             setImages(images.filter(image => image._id !== imageId));

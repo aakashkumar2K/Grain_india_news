@@ -22,11 +22,17 @@ const AddImage = () => {
         formData.append('cImage', imageData);
 
         setIsUploading(true);
+
+        
+
         try {
+            const token = localStorage.getItem("accessToken");
+            console.log(token);
             await axios.post(`${BASE_URL}/api/v1/crousel/addCrousel`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },
+                      'Authorization': `Bearer ${token}`
+              },
                 
                 withCredentials: true,
             });

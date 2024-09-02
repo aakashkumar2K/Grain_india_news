@@ -144,8 +144,11 @@ const BlogList = () => {
                     },
                 });
                 //console.log(response.data.data.data);
-                const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data: [response.data.dat.data];
-                setBlogs(blogsArray);
+                
+                
+              const blogsArray = Array.isArray(response.data.data.data) ? response.data.data.data: [response.data.dat.data];
+              const sortedBlogs = blogsArray.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));  
+              setBlogs(sortedBlogs);
             } catch (error) {
                 console.error('Error fetching blogs:', error);
             }

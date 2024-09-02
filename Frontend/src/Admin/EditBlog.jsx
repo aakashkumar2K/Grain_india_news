@@ -14,11 +14,15 @@ const EditBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
+                const token = localStorage.getItem("accessToken");
                 const response = await axios.get(`${BASE_URL}/api/v1/blog/blogg?id=${blogId}`,
                     {
-                        headers:{
-                          'Accept': 'application/json, text/plain, */*'
-                        },withCredentials: true},
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                              'Authorization': `Bearer ${token}`
+                      },
+                      withCredentials:true
+                        }
                   );
                 setBlogData(response.data.data);
                 setPrevImage(response.data.data.blogImage);
@@ -40,10 +44,12 @@ const EditBlog = () => {
 
         try {
             setIsUploading(true);
+            const token = localStorage.getItem("accessToken");
             await axios.put(`${BASE_URL}/api/v1/blog/updateBlog?id=${blogId}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+               headers: {
+                            'Content-Type': 'multipart/form-data',
+                              'Authorization': `Bearer ${token}`
+                      },
                 withCredentials:true,
             });
             toast.success('Blog updated successfully!');

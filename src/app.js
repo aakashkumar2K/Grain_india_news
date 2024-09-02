@@ -8,15 +8,15 @@ const app=express();
 //     origin:process.env.origin,
 //     credentials:true
 // }));
-/* app.use(cors({
-    origin: 'http://localhost:5173', // The origin of your frontend application
-    credentials: true, // This allows cookies to be sent and received
-  }));
-  app.use(cors({
-    origin: 'https://grainindianews.netlify.app',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  })); */
+//  app.use(cors({
+//     origin: 'http://localhost:5173', // The origin of your frontend application
+//     credentials: true, // This allows cookies to be sent and received
+//   }));
+  // app.use(cors({
+  //   origin: 'https://grainindianews.netlify.app',
+  //   methods: ['GET', 'POST'],
+  //   allowedHeaders: ['Content-Type', 'Authorization']
+  // })); 
   app.use(cors({
     origin: 'https://grain-india-news.vercel.app/',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
