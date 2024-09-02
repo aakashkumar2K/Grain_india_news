@@ -18,7 +18,7 @@ const app=express();
   //   allowedHeaders: ['Content-Type', 'Authorization']
   // })); 
   app.use(cors({
-    origin: 'https://grain-india-news.vercel.app/',
+    origin: 'https://grain-india-news.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials:true
