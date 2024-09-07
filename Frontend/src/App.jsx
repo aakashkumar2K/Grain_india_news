@@ -95,7 +95,8 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/login" element={<Login />} />
             </Route>
-         
+         </Routes>
+         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<Admin />}>
               <Route index element={<AdminHome />} />
